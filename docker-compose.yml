@@ -1,0 +1,50 @@
+version: '3.9'
+services:
+  netbootxyz:
+    image: ghcr.io/netbootxyz/netbootxyz:0.7.3-nbxyz3@sha256:fce591578489f56e895d2bc098b6b40584b5f3e900e78537d7d83d0889a4d885
+    hostname: netbootxyz
+    container_name: netbootxyz__netbootxyz
+    restart: unless-stopped
+
+    environment:
+      NGINX_PORT: "80"
+      WEB_APP_PORT: "8069"
+
+    ports:
+      - 69:69/udp
+      - 8069:8069
+
+    volumes:
+      - type: volume
+        source: netbootxyz_config
+        target: /config
+
+      - type: volume
+        source: netbootxyz_assets
+        target: /assets
+
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+
+
+  cloudflared:
+    image: cloudflare/cloudflared:2025.1.1@sha256:bc2b3edd9eb0257a1a1fc58113e97426afe524e04b898173cd7df01442bcb4b3
+    hostname: cloudflared
+    container_name: netbootxyz__cloudflared
+    restart: unless-stopped
+
+    command: tunnel run --token ${TUNNEL_TOKEN}
+
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+
+volumes:
+  netbootxyz_config:
+    name: netbootxyz__netbootxyz_config
+
+  netbootxyz_assets:
+    name: netbootxyz__netbootxyz_assets
