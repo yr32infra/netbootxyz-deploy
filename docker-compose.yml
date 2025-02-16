@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   netbootxyz:
-    image: ghcr.io/netbootxyz/netbootxyz:0.7.3-nbxyz3@sha256:fce591578489f56e895d2bc098b6b40584b5f3e900e78537d7d83d0889a4d885
+    image: ghcr.io/netbootxyz/netbootxyz:0.7.5-nbxyz3@sha256:8bfddae9e2cc530a34112328e164aedb1bb93f7cd5810e62768c8ee1ac4c5436
     hostname: netbootxyz
     container_name: netbootxyz__netbootxyz
     restart: unless-stopped
